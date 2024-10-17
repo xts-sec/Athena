@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Update Issue{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1>Update Issue for Project: {{ form.instance.project.name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_title" class="form-label">Title</label>
+            <input type="text" name="title" id="id_title" class="form-control" value="{{ form.instance.title }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_description" class="form-label">Description</label>
+            <textarea name="description" id="id_description" class="form-control" required>{{ form.instance.description }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="id_priority" class="form-label">Priority</label>
+            <select name="priority" id="id_priority" class="form-control" required>
+                {% for value, display in form.priority.field.choices %}
+                    <option value="{{ value }}" {% if value == form.instance.priority %}selected{% endif %}>{{ display }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="id_status" class="form-label">Status</label>
+            <select name="status" id="id_status" class="form-control" required>
+                {% for value, display in form.status.field.choices %}
+                    <option value="{{ value }}" {% if value == form.instance.status %}selected{% endif %}>{{ display }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Update Issue</button>
+        <a href="{% url 'issue_detail_view' form.instance.id %}" class="btn btn-secondary">Cancel</a>
+        <a href="{% url 'backlog_view' form.instance.project.id %}" class="btn btn-secondary">Back to Backlog</a> <!-- Optional: Back to backlog button -->
+    </form>
+</div>
+
+{% endblock %}

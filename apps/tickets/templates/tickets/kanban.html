@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Kanban{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Kanban Board for {{ project.name }}</h1>
+    
+    <a href="{% url 'backlog_view' project.id %}" class="btn btn-primary mb-3">Switch to Backlog View</a>
+    <a href="{% url 'issue_create_view' project.id %}" class="btn btn-success mb-3">Add Issue</a>
+
+    <div class="row">
+        {% for status_name, status_label in statuses %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">{{ status_label }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="kanban-column" data-status="{{ status_name }}"> 
+                        <div class="kanban-items" id="status-{{ status_name }}">
+                            {% for issue in issues %}
+                                {% if issue.status == status_name %}
+                                <div class="kanban-item card mb-2" data-issue="{{ issue.id }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ issue.title }}</h5>
+                                        <p class="card-text">{{ issue.description }}</p>
+                                        <a href="{% url 'issue_detail_view' issue.id %}" class="btn btn-primary">View Issue</a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+<script>
+    var columns = document.querySelectorAll('.kanban-items');
+    columns.forEach(function (column) {
+        new Sortable(column, {
+            group: 'kanban',
+            onEnd: function (evt) {
+                var issueId = evt.item.getAttribute('data-issue');
+                var newStatusId = evt.to.closest('.kanban-column').getAttribute('data-status');
+
+                console.log('Issue ID:', issueId);
+                console.log('New Status ID:', newStatusId);
+
+                fetch(`/tickets/update-issue-status/${issueId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 'new_status_id': newStatusId })
+                }).then(response => {
+                    if (!response.ok) {
+                        console.error('Failed to update issue status');
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+{% endblock %}
+

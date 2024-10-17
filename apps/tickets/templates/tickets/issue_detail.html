@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Issue Details{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1 class="mb-3">{{ issue.title }}</h1>
+    
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Description</h5>
+            <p class="card-text">{{ issue.description }}</p>
+        </div>
+        <div class="card-footer">
+            <p class="mb-0"><strong>Status:</strong> {{ issue.status }}</p>
+            <p class="mb-0"><strong>Priority:</strong> {{ issue.priority }}</p>
+        </div>
+    </div>
+
+    <a href="{% url 'issue_update_view' issue.id %}" class="btn btn-warning">Edit Issue</a>
+    <a href="{% url 'backlog_view' issue.project.id %}" class="btn btn-secondary">Back to Backlog</a>  <!-- Optional: Back to backlog button -->
+</div>
+
+{% endblock %}
+

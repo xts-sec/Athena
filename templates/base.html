@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %} | Athena</title>
+        <!-- Boostrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body>
+        <!-- Nav Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/tickets/dashboard/">Athena</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Navigation">
+                    <span class="navbar-toggle-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+
+                        {% if user.is_authenticated %}
+
+                        <li class="nav-item">
+                            <form id="logoutForm" method="POST" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link nav-link active" style="display:inline; padding:0; margin:0;">Logout</button>
+                            </form>
+                        </li>
+
+                        {% else %}
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/user/login">Login</a>
+                        </li>
+
+                        {% endif %}
+
+                    </ul>
+                </div>
+        </nav>
+        <!-- End Nav Bar -->
+
+        <!-- Main Container -->
+        <div class="container">
+            {% block content %}
+            <!-- Page content goes here -->
+            {% endblock %}
+        </div>
+        <!-- End Main Container -->
+
+        <!-- Footer -->
+        <footer class="footer fixed-bottom bg-dark text-white text-center py-3 mt-4">
+            Athena - Task Management
+        </footer>
+        <!-- End Footer -->
+    </body>
+</html>
+
