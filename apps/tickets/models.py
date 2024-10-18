@@ -1,4 +1,5 @@
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field
 
 # Create your models here.
 
@@ -22,8 +23,14 @@ class Issue(models.Model):
     ]
 
     title = models.CharField(max_length=200)
-    description = models.TextField()
-
+    short_description = models.TextField()
+    long_description = CKEditor5Field(
+        "Long Description",
+        config_name="extends",
+        default="Long Description of issue",
+        null=False,
+        blank=False,
+    )  # Rich text field
     priority = models.CharField(
         max_length=12,
         choices=PRIORITY_CHOICES,
@@ -31,7 +38,6 @@ class Issue(models.Model):
         null=False,
         blank=False,  # Ensure that blank or null values are not allowed
     )
-
 
     status = models.CharField(
         max_length=12,

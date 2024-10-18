@@ -25,7 +25,7 @@
                                 <div class="kanban-item card mb-2" data-issue="{{ issue.id }}">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ issue.title }}</h5>
-                                        <p class="card-text">{{ issue.description }}</p>
+                                        <p class="card-text">{{ issue.short_description }}</p>
                                         <a href="{% url 'issue_detail_view' issue.id %}" class="btn btn-primary">View Issue</a>
                                     </div>
                                 </div>

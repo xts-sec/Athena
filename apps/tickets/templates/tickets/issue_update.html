@@ -4,6 +4,8 @@
 
 {% block content %}
 
+{{ form.media }}
+
 <div class="container mt-4">
     <h1>Update Issue for Project: {{ form.instance.project.name }}</h1>
     <form method="post">
@@ -13,9 +15,15 @@
             <input type="text" name="title" id="id_title" class="form-control" value="{{ form.instance.title }}" required>
         </div>
         <div class="mb-3">
-            <label for="id_description" class="form-label">Description</label>
-            <textarea name="description" id="id_description" class="form-control" required>{{ form.instance.description }}</textarea>
+            <label for="id_short_description" class="form-label">Short Description</label>
+            <textarea name="short_description" id="id_short_description" class="form-control" required>{{ form.instance.short_description }}</textarea>
         </div>
+
+        <div class="mb-3">
+            <label for="id_long_description" class="form-label">Long Description</label>
+            {{ form.long_description|safe }}
+        </div>
+
         <div class="mb-3">
             <label for="id_priority" class="form-label">Priority</label>
             <select name="priority" id="id_priority" class="form-control" required>
