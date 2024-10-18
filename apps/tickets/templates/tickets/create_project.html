@@ -4,13 +4,22 @@
 
 {% block content %}
 
-    <div class="container">
-        <h1>Create New Project</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-success">Create Project</button>
-        </form>
-    </div>
+<div class="container mt-4">
+    <h1 class="mb-4">Create New Project</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_name" class="form-label">Project Name</label>
+            <input type="text" name="name" id="id_name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_description" class="form-label">Project Description</label>
+            <textarea name="description" id="id_description" class="form-control" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Create Project</button>
+        <a href="{% url 'dashboard_view' %}" class="btn btn-secondary">Cancel</a> <!-- Optional: Cancel button -->
+    </form>
+</div>
 
 {% endblock %}
+

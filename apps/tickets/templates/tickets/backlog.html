@@ -29,8 +29,8 @@
                         <tr>
                             <td>{{ issue.title }}</td>
                             <td>{{ issue.description }}</td>
-                            <td>{{ issue.priority }}</td>
-                            <td>{{ issue.status }}</td>
+                            <td>{{ issue.get_priority_display }}</td>
+                            <td>{{ issue.get_status_display }}</td>
                             <td>
                                 <a href="{% url 'issue_detail_view' issue.id %}" class="btn btn-info btn-sm">View</a>
                                 <a href="{% url 'issue_update_view' issue.id %}" class="btn btn-warning btn-sm">Edit</a>
