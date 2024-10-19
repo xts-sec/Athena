@@ -92,6 +92,14 @@ def create_project_view(request):
 
     return render(request, "tickets/create_project.html", {"form": form})
 
+def project_update_view(request, project_id):
+    project = Project.objects.get(id=project_id)
+    form = ProjectForm(request.POST or None, instance=project)
+    if form.is_valid():
+        form.save()
+        return redirect("dashboard_view")
+    return render(request, "tickets/update_project.html", {"form": form})
+
 
 @csrf_exempt
 def update_issue_status(request, issue_id):
