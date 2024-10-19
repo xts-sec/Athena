@@ -4,48 +4,50 @@
 
 {% block content %}
 
-    <div class="container mt-4">
-        <h1>Create Issue for Project: {{ project.name }}</h1>
-        <form method="POST">
-            {% csrf_token %}
+{{ form.media }}
 
-            <div class="mb-3">
-                <label for="id_title" class="form-label">Title</label>
-                <input type="text" name="title" id="id_title" class="form-control" required>
-            </div>
+<div class="container mt-4">
+    <h1>Create Issue for Project: {{ project.name }}</h1>
+    <form method="POST">
+        {% csrf_token %}
 
-            <div class="mb-3">
-                <label for="id_short_description" class="form-label">Short Description</label>
-                <textarea name="short_description" id="id_short_description" class="form-control" required></textarea>
-            </div>
+        <div class="mb-3">
+            <label for="id_title" class="form-label">Title</label>
+            <input type="text" name="title" id="id_title" class="form-control" required>
+        </div>
 
-            <div class="mb-3">
-                <label for="id_long_description" class="form-label">Long Description</label>
-                {{ form.long_description|safe }}
-            </div>
+        <div class="mb-3">
+            <label for="id_short_description" class="form-label">Short Description</label>
+            <textarea name="short_description" id="id_short_description" class="form-control" required></textarea>
+        </div>
 
-            <div class="mb-3">
-                <label for="id_priority" class="form-label">Priority</label>
-                <select name="priority" id="id_priority" class="form-control" required>
-                    {% for value, display in form.priority.field.choices %}
-                        <option value="{{ value }}">{{ display }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+        <div class="mb-3">
+            <label for="id_long_description" class="form-label">Long Description</label>
+            {{ form.long_description|safe }}
+        </div>
 
-            <div class="mb-3">
-                <label for="id_status" class="form-label">Status</label>
-                <select name="status" id="id_status" class="form-control" required>
-                    {% for value, display in form.status.field.choices %}
-                        <option value="{{ value }}">{{ display }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+        <div class="mb-3">
+            <label for="id_priority" class="form-label">Priority</label>
+            <select name="priority" id="id_priority" class="form-control" required>
+                {% for value, display in form.priority.field.choices %}
+                <option value="{{ value }}">{{ display }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-            <button type="submit" class="btn btn-success">Create Issue</button>
+        <div class="mb-3">
+            <label for="id_status" class="form-label">Status</label>
+            <select name="status" id="id_status" class="form-control" required>
+                {% for value, display in form.status.field.choices %}
+                <option value="{{ value }}">{{ display }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        </form>
-    </div>
+        <button type="submit" class="btn btn-success">Create Issue</button>
+
+    </form>
+</div>
 
 
 {% endblock %}

@@ -6,7 +6,7 @@
 
 <div class="container mt-4">
     <h1 class="mb-4">Kanban Board for {{ project.name }}</h1>
-    
+
     <a href="{% url 'backlog_view' project.id %}" class="btn btn-primary mb-3">Switch to Backlog View</a>
     <a href="{% url 'issue_create_view' project.id %}" class="btn btn-success mb-3">Add Issue</a>
 
@@ -43,32 +43,32 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
 <script>
-    var columns = document.querySelectorAll('.kanban-items');
-    columns.forEach(function (column) {
-        new Sortable(column, {
-            group: 'kanban',
-            onEnd: function (evt) {
-                var issueId = evt.item.getAttribute('data-issue');
-                var newStatusId = evt.to.closest('.kanban-column').getAttribute('data-status');
+var columns = document.querySelectorAll('.kanban-items');
+columns.forEach(function (column) {
+    new Sortable(column, {
+        group: 'kanban',
+        onEnd: function (evt) {
+            var issueId = evt.item.getAttribute('data-issue');
+            var newStatusId = evt.to.closest('.kanban-column').getAttribute('data-status');
 
-                console.log('Issue ID:', issueId);
-                console.log('New Status ID:', newStatusId);
+            console.log('Issue ID:', issueId);
+            console.log('New Status ID:', newStatusId);
 
-                fetch(`/tickets/update-issue-status/${issueId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 'new_status_id': newStatusId })
-                }).then(response => {
+            fetch(`/update-issue-status/${issueId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 'new_status_id': newStatusId })
+            }).then(response => {
                     if (!response.ok) {
                         console.error('Failed to update issue status');
                     }
                 });
-            }
-        });
+        }
     });
+});
 </script>
 
 {% endblock %}

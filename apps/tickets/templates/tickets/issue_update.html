@@ -28,7 +28,7 @@
             <label for="id_priority" class="form-label">Priority</label>
             <select name="priority" id="id_priority" class="form-control" required>
                 {% for value, display in form.priority.field.choices %}
-                    <option value="{{ value }}" {% if value == form.instance.priority %}selected{% endif %}>{{ display }}</option>
+                <option value="{{ value }}" {% if value == form.instance.priority %}selected{% endif %}>{{ display }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -36,13 +36,14 @@
             <label for="id_status" class="form-label">Status</label>
             <select name="status" id="id_status" class="form-control" required>
                 {% for value, display in form.status.field.choices %}
-                    <option value="{{ value }}" {% if value == form.instance.status %}selected{% endif %}>{{ display }}</option>
+                <option value="{{ value }}" {% if value == form.instance.status %}selected{% endif %}>{{ display }}</option>
                 {% endfor %}
             </select>
         </div>
         <button type="submit" class="btn btn-success">Update Issue</button>
         <a href="{% url 'issue_detail_view' form.instance.id %}" class="btn btn-secondary">Cancel</a>
-        <a href="{% url 'backlog_view' form.instance.project.id %}" class="btn btn-secondary">Back to Backlog</a> <!-- Optional: Back to backlog button -->
+        <a href="{% url 'backlog_view' form.instance.project.id %}" class="btn btn-primary">Back to Backlog</a> 
+        <a href="{% url 'kanban_view' form.instance.project.id %}" class="btn btn-primary">Back to Kanban</a> 
     </form>
 </div>
 
