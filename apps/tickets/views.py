@@ -3,6 +3,8 @@ import json
 from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView
 
 from .forms import IssueForm, ProjectForm
 from .models import Issue, Project
@@ -126,3 +128,8 @@ def update_issue_status(request, issue_id):
             return JsonResponse({"error": "Invalid JSON"}, status=400)
         except Issue.DoesNotExist:
             return JsonResponse({"error": "Issue not found"}, status=404)
+
+class ProjectDeleteView(DeleteView):
+    model = Project
+    template_name = 'tickets/project_confirm_delete.html'
+    success_url = reverse_lazy('dashboard_view')  # Change to your desired redirect page after deletion
